@@ -9,9 +9,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   
   rForm: FormGroup;
-  post:any;                     // A property for our submitted form
+  rForm1: FormGroup;
+  post:any; 
+  post1: any;                    // A property for our submitted form
   description:string = '';
   name:string = '';
+  name1:string = '';
   titleAlert:string = 'This field is required';
 
   constructor(private fb: FormBuilder) {
@@ -20,6 +23,10 @@ export class AppComponent {
       'name': [null, Validators.required],
       'description': [null, Validators.compose([Validators.required, Validators.minLength(30), Validators.maxLength(500)])],
       'validate' : ''
+    });
+    this.rForm1 = fb.group({
+      'name1': [null, Validators.required],
+      'validate' : ' '
     });
 
   }
@@ -36,12 +43,20 @@ export class AppComponent {
         }
         this.rForm.get('name').updateValueAndValidity();
       }
+    );
+    this.rForm1.get('validate').valueChanges.subscribe(
+      (validate) => {
+        this.rForm1.get('name1').setValidators(Validators.required);
+      }
     )
   }
 
   addPost(post) {
     this.description = post.description;
     this.name = post.name;
+  }
+  addPost1(post1) {
+    this.name1 = post1.name1;
   }
 
 }
